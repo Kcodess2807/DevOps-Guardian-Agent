@@ -10,39 +10,38 @@ reviews:
   high_level_summary: true
   poem: false
   review_status: true
-
-checks:
-  - security
-  - performance
-  - best_practices
-  - documentation
-  - error_handling
-
-language_settings:
-  javascript:
-    enable: true
-  typescript:
-    enable: true
-  yaml:
-    enable: true
-  python:
-    enable: true
-  markdown:
-    enable: true
-
-pr_description:
-  enabled: true
   
-comments:
-  tone: professional
-  format: markdown
+  # Custom instructions per path
+  path_instructions:
+    - path: "**/*.js"
+      instructions: |
+        This is a hackathon project for AI Agents Assemble (WeMakeDevs).
+        Focus on:
+        - Clean, maintainable code
+        - Proper error handling
+        - Clear documentation
+        - Best practices for production code
+        - Security considerations
+    
+    - path: "**/*.py"
+      instructions: |
+        This is a hackathon project for AI Agents Assemble (WeMakeDevs).
+        Focus on:
+        - Clean, maintainable code
+        - Proper error handling
+        - Clear documentation
+        - Best practices for production code
+        - Security considerations
+    
+    - path: "**/*.yml"
+      instructions: |
+        Ensure GitHub Actions workflows follow best practices:
+        - Use latest action versions
+        - Proper error handling
+        - Security considerations
 
-# Focus areas for hackathon project
-custom_instructions: |
-  This is a hackathon project for AI Agents Assemble (WeMakeDevs).
-  Focus on:
-  - Clean, maintainable code
-  - Proper error handling
-  - Clear documentation
-  - Best practices for production code
-  - Security considerations
+# Language is set at root level
+language: en-US
+
+# Tone instructions at root level
+tone_instructions: "Use a professional tone in reviews."

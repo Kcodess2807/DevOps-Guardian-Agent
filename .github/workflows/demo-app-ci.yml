@@ -21,10 +21,10 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'npm'
@@ -36,8 +36,8 @@ jobs:
       - name: Check code (no tests yet)
         run: echo "Backend validation passed - tests coming soon"
       
-      - name: Verify start script exists
-        run: npm run start --help || echo "Start script verified"
+      - name: Verify package.json scripts
+        run: node -e "const pkg = require('./package.json'); if (!pkg.scripts.start) process.exit(1);"
   
   # Frontend Tests
   frontend-tests:
@@ -48,10 +48,10 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'npm'
@@ -76,15 +76,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       
       - name: Run npm audit (backend)
         working-directory: ./demo-app/backend
-        run: npm audit --audit-level=high || true
+        run: npm audit --audit-level=high || echo "::warning::Security vulnerabilities detected in backend"
       
       - name: Run npm audit (frontend)
         working-directory: ./demo-app/frontend
-        run: npm audit --audit-level=high || true
+        run: npm audit --audit-level=high || echo "::warning::Security vulnerabilities detected in frontend"
 
   # This job will intentionally fail for demo purposes
   # We'll use this to trigger the DevOps Guardian Agent
