@@ -1,0 +1,48 @@
+# CodeRabbit Configuration for DevOps Guardian Agent
+# This ensures CodeRabbit reviews our PRs with focus on quality and best practices
+
+reviews:
+  auto_review:
+    enabled: true
+  request_changes_workflow: true
+  
+  # Review settings
+  high_level_summary: true
+  poem: false
+  review_status: true
+
+checks:
+  - security
+  - performance
+  - best_practices
+  - documentation
+  - error_handling
+
+language_settings:
+  javascript:
+    enable: true
+  typescript:
+    enable: true
+  yaml:
+    enable: true
+  python:
+    enable: true
+  markdown:
+    enable: true
+
+pr_description:
+  enabled: true
+  
+comments:
+  tone: professional
+  format: markdown
+
+# Focus areas for hackathon project
+custom_instructions: |
+  This is a hackathon project for AI Agents Assemble (WeMakeDevs).
+  Focus on:
+  - Clean, maintainable code
+  - Proper error handling
+  - Clear documentation
+  - Best practices for production code
+  - Security considerations
