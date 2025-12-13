@@ -7,7 +7,7 @@ const { validateEditProfileData, validateEditPasswordData } = require('../utils/
 const profileRouter = express.Router()
 
 
-// Route to get Profile
+
 profileRouter.get("/profile/view", userAuth, async (req, res) => {
    try{
     
