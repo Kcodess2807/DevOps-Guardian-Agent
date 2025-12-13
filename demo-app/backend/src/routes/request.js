@@ -61,10 +61,15 @@ requestRouter.post("/request/send/:status/:toUserId", userAuth, async (req, res)
       // console.log("Email sending failed (but request succeeded):", emailError.message);
     }
 
-    res.json({
-      message: req.user.firstName + " "+ status +  " " + toUser.firstName,
-      data
-    })
+    return res.status(500).json({
+  message: "Intentional failure for Kestra CI demo"
+});
+
+
+    // res.json({
+    //   message: req.user.firstName + " "+ status +  " " + toUser.firstName,
+    //   data
+    // })
 
   }catch(err) {
     res.status(400).send("Error: " + err.message);
