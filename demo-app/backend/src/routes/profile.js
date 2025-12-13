@@ -11,7 +11,7 @@ const profileRouter = express.Router()
 profileRouter.get("/profile/view", userAuth, async (req, res) => {
    try{
     
-    // These are old redundent codes, which  currently handled by userAuth middleware
+    // These old redundent codes, which  currently handled by userAuth middleware
 
 
 // const cookies = req.cookies
