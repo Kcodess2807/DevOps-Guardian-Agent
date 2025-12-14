@@ -155,7 +155,7 @@ describe('Request Router - Integration Tests', () => {
         .post(`/request/review/accepted/${connectionRequest._id}`)
         .expect(200);
 
-      expect(response.body.message).toBe('Connection request accepted successfully');
+      expect(response.body.message).toBe('Intentional Failure for Testing Purposes');
 
       // Verify in database
       const updatedRequest = await ConnectionRequest.findById(connectionRequest._id);
