@@ -136,13 +136,12 @@ app.patch("/user/:userId", async (req, res) => {
 });
 
 connectDB()
-  
-  .catch((err) => {
-    console.log("Error connecting to database", err);
-  });
-.then(() => {
+  .then(() => {
     console.log("Connected to database successfully");
     server.listen(process.env.PORT, () => {
       console.log("server is running on port 3000");
     });
   })
+  .catch((err) => {
+    console.log("Error connecting to database", err);
+  });
