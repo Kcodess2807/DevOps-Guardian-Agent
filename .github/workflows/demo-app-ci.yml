@@ -3,7 +3,7 @@ name: Demo App CI/CD
 
 on:
   push:
-    branches: ["**"]   # Allow trigger on all branches (best for hackathon testing)
+    branches: ["**"]
     paths:
       - 'demo-app/**'
       - '.github/workflows/**'
@@ -13,9 +13,9 @@ on:
       - 'demo-app/**'
 
 jobs:
-  # ------------------------------------------------------------------
-  # Backend Tests
-  # ------------------------------------------------------------------
+  # --------------------------------------------------
+  # Backend Tests (THIS WILL FAIL ON BROKEN CODE)
+  # --------------------------------------------------
   backend-tests:
     runs-on: ubuntu-latest
     defaults:
@@ -41,12 +41,10 @@ jobs:
           npm run test:integration -- --coverage=false 2>&1 | tee result.log
         env:
           NODE_ENV: test
-        continue-on-error: true
 
-      - name: Verify start script
-        run: node -e "const pkg = require('./package.json'); if (!pkg.scripts.start) process.exit(1);"
-        continue-on-error: true
-
+      # --------------------------------------------------
+      # Notify Kestra ONLY IF JOB FAILED
+      # --------------------------------------------------
       - name: Notify Kestra on failure
         if: failure()
         run: |
@@ -73,9 +71,9 @@ jobs:
         env:
           KESTRA_WEBHOOK_URL: ${{ secrets.KESTRA_WEBHOOK_URL }}
 
-  # ------------------------------------------------------------------
-  # Security Scan
-  # ------------------------------------------------------------------
+  # --------------------------------------------------
+  # Security Scan (NON-BLOCKING)
+  # --------------------------------------------------
   security-scan:
     runs-on: ubuntu-latest
     steps:
@@ -84,18 +82,17 @@ jobs:
 
       - name: Run npm audit (backend)
         working-directory: ./demo-app/backend
-        run: npm audit --audit-level=high || echo "::warning::Security vulnerabilities detected in backend"
+        run: npm audit --audit-level=high || echo "::warning::Backend vulnerabilities detected"
 
       - name: Run npm audit (frontend)
         working-directory: ./demo-app/frontend
-        run: npm audit --audit-level=high || echo "::warning::Security vulnerabilities detected in frontend"
+        run: npm audit --audit-level=high || echo "::warning::Frontend vulnerabilities detected"
 
-  # ------------------------------------------------------------------
-  # Intentional Failure (For Kestra Testing)
-  # ------------------------------------------------------------------
+  # --------------------------------------------------
+  # Intentional Failure (Manual Kestra Testing)
+  # --------------------------------------------------
   intentional-failure:
     runs-on: ubuntu-latest
-
     if: >
       github.event_name == 'push' &&
       contains(toJson(github.event.commits), '[trigger-failure]')
